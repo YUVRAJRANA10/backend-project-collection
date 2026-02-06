@@ -8,9 +8,7 @@ app.use(express.json());
 
 app.use('/notes', notesrouter);
 
-app.get('/', (req,res) => {
-    res.send("Note API is running")
-})
+
 
 app.listen(3000, ()=> {
 console.log("Server is running at port 3000")
