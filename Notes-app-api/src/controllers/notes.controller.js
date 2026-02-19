@@ -1,9 +1,42 @@
 const fs = require('fs/promises');
 const path = require('path');
-const { json } = require('stream/consumers');
+
 
 const notesFilesPath = path.join(__dirname,'../../data/notes.json');
 
+
+const getNoteById = async (req,res) => {
+
+  try {
+
+    const {id} = req.params;
+
+    const filedata =await fs.readFile(notesFilesPath,'utf-8');
+    const notes = JSON.parse(filedata);
+
+    const note = notes.find(n => n.id == id);
+    
+        if (!note) {
+      return res.status(404).json({
+        message: 'Note not found'
+      });
+    }
+
+
+    res.json(note);
+   
+  } catch (error) {
+    
+res.status(500).json({
+
+    message: 'Failed to fetch note',
+      error: error.message
+});
+
+  }
+
+
+};
 
 const getAllNotes = async (req,res) => {
  
@@ -84,5 +117,6 @@ res.status(500).json({
 
 module.exports = {
   getAllNotes,
-  createNote
+  createNote,
+  getNoteById
 };
