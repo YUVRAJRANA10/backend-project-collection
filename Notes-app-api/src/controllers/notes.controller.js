@@ -1,3 +1,4 @@
+const { error } = require('console');
 const fs = require('fs/promises');
 const path = require('path');
 
@@ -158,9 +159,57 @@ res.status(500).json({
 }
 };
 
+
+const Deletenotes = async(req,res) => {
+try{
+
+
+   const {id} = req.params;
+
+ const data = await fs.readFile(notesFilesPath,'utf-8');
+ const notes  = JSON.parse(data);
+
+ const noteIndex = notes.findIndex((n) => n.id == id);
+
+
+
+let deletednote = {};
+ if(noteIndex > -1){
+
+  deletednote =  notes[noteIndex];
+
+ notes.splice(noteIndex,1);
+
+ }
+ else{
+
+  res.status(404).json({
+    message: "Id doesn't exist"
+  })
+ }
+
+
+ await fs.writeFile(notesFilesPath,JSON.stringify(notes,null,2));
+
+
+ res.json(deletednote);
+
+
+}
+catch(error){
+  res.status(500).json({
+    message: "File not deleted successfully",
+    error: error.message
+  })
+}
+
+};
+
+
 module.exports = {
   getAllNotes,
   createNote,
   getNoteById,
-  updateNote
+  updateNote,
+  Deletenotes
 };
