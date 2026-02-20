@@ -1,8 +1,9 @@
 [
   {
     "id": 1771477892886,
-    "title": "Second Note",
-    "content": "Testing from Thunder Client",
-    "createdAt": "2026-02-19T05:11:32.886Z"
+    "title": "Edited Note",
+    "content": "Now update works",
+    "createdAt": "2026-02-19T05:11:32.886Z",
+    "updatedAt": "2026-02-20T10:15:41.534Z"
   }
 ]
